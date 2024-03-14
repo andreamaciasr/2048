@@ -1,0 +1,22 @@
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px; /* Adjust the space between the cells */
+    width: 400px; /* Adjust based on your preference */
+    height: 400px; /* Adjust based on your preference */
+    margin: 0 auto; /* Center the grid horizontally */
+    background-color: pink;
+}
+
+.cell {
+    background-color: #f0f0f0; /* Light grey background, change as needed */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    font-size: 20px; /* Adjust text size as needed */
+    color: #333; /* Text color, change as needed */
+    /* border: 2px solid pink; */
+}
+
