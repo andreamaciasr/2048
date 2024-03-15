@@ -1,13 +1,14 @@
 
 #grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    grid-template-rows: repeat(4, 1fr);
-    gap: 10px; 
-    width: 400px; 
-    height: 400px; 
-    margin: 0 auto; 
-    background-color: pink;
+    grid-template-columns: repeat(4, 20vmin); 
+    grid-template-rows: repeat(4, 20vmin);
+    gap: 2vmin; 
+    /* width: 400px; 
+    /* height: 400px;  */
+    /* margin: 0 auto;  */
+    position: relative;
+    padding: 3vmin;
 }
 
 .cell {
@@ -18,5 +19,20 @@
     font-size: 20px; 
     color: #333; 
     /* border: 2px solid pink; */
+    /* transition: all 200ms ease-out; */
+}
+
+.tile{
+    --x: 3;
+    --y: 3;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20vmin;
+    height: 20vmin;
+    background-color: red;
+    top: calc(var(--y) * (20vmin + 2vmin) + 3vmin);
+    left: calc(var(--x) * (20vmin + 2vmin) + 3vmin);
 }
 
