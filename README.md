@@ -18,7 +18,7 @@ side (right or left) and be added in that order if they are equal.
 
 2.3 Add a random 2 or 4 at an available cell on the board.
 
-        2.3.1 Write a function that stores the indexes of free cells - both row and column - to be passed to the addNumber() function.
+2.3.1 Write a function that stores the indexes of free cells - both row and column - to be passed to the addNumber() function.
 
 3.1 Two more functions that respond to the up and down keys: digits should move up or down and be added in that order.
 
@@ -31,9 +31,9 @@ side (right or left) and be added in that order if they are equal.
 
 4.2 If the array board doesn't have any null values left, a function to check if there are possible movements should be called:
 
-    4.2.1 The possibleMoves() function should iterate through the array and check if there are adjacent equal numbers, ex: [2,4,2,2], if 
+4.2.1 The possibleMoves() function should iterate through the array and check if there are adjacent equal numbers, ex: [2,4,2,2], if 
 
-    true then the game continues, else Game Over!
+ true then the game continues, else Game Over!
 
 ## Render Board ##
 5.1 Render the board based on the board variable: the renderBoard() function should loop through the board array and render the contents 
