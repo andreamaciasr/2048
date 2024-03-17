@@ -28,9 +28,14 @@
 
             this.x = x;
             this.y = y;
-            
+
 
         }
+        
+        getId(){ 
+            this.id = this.x.toString() + this.y.toString();
+        } 
+
         moveX() {
             this.tileElem.style.setProperty("--x", this.x);
 
@@ -85,23 +90,25 @@ function init(){
     // board[getRowIdx()][getColIdx()] = Math.random() > 0.1 ? 2 : 4;
     tilesArray = [];
     // hard code tiles in specific places an push them to tilesArray
-    // let tile_1 = new Tile(1, 1, 2);
+    let tile_1 = new Tile(0, 2, 2);
     // tile_1.moveX();
-    // tile_1.moveY();
-    // tilesArray.push(tile_1)
+    tile_1.moveY();
+    tilesArray.push(tile_1)
     // let tile_2 = new Tile(1, 3, 2);
     // tilesArray.push(tile_2);
     // tile_2.moveX();
     // tile_2.moveY();
 
-    // // little loop test
-    // for (let i = 0; i < tilesArray.length; i++){
-    //     for (let j = 0; j < 1; j++){
-    //         tilesArray[i].x++;
-    //         setInterval(() => tilesArray[i].moveX(), 10);
-    //         console.log(tilesArray[i]);
-    //     }
-    // }
+    // little loop test
+    for (let i = 0; i < tilesArray.length; i++){
+        for (let j = 0; j < 3; j++){
+            tilesArray[i].x++;
+            setInterval(() => tilesArray[i].moveX(), 10);
+            tile_1.getId();
+            console.log(tilesArray[i]);
+            console.log(tilesArray[i].id);
+        }
+    }
     
     // setInterval(moveX, 10);
 
@@ -115,6 +122,7 @@ function init(){
 }
 
 init();
+
 
 
 // generateRandPosition() {
