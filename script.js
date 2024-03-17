@@ -24,25 +24,35 @@
             this.num = num;
             this.tileElem.innerText = this.num;
             this.tileElem.style.backgroundColor = COLORS[num];
+            this.tileElem.style.transition = "left 0.5s, top 0.5s";
 
             this.x = x;
-            this.tileElem.style.setProperty("--x", x);
-
             this.y = y;
-            this.tileElem.style.setProperty("--y", y);
+            
 
         }
+        moveX() {
+            this.tileElem.style.setProperty("--x", this.x);
+
+        }
+
+        moveY() {
+            this.tileElem.style.setProperty("--y", this.y);
+        }
+
+        
     }
 
- 
-    
-
 	/*----- state variables -----*/
-    let board;
+    // let board;
+    let tilesArray;
     let grid;
-    let availableRowIdx;
-    let availableColIdx;
+    let occupiedIdxs;
+    // let availableRowIdx;
+    // let availableColIdx;
     let winner;
+
+
 
 	/*----- cached elements  -----*/
     // grid = Array.from(document.querySelector("#grid > div"));
@@ -62,23 +72,61 @@
         
 function init(){
 
-    board = [[null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],]
+    // board = [[null, null, null, null],
+    // [null, null, null, null],
+    // [null, null, null, null],
+    // [null, null, null, null],]
 
-    board[Math.floor(Math.random() * board.length )][Math.floor(Math.random() * board.length)] = 2;
-    board[Math.floor(Math.random() * board.length )][Math.floor(Math.random() * board.length)] = 2;
+    // add two no tiles at random indxs
+    // populateAvailableIdx(board);
     
+   
+    // board[getRowIdx()][getColIdx()] = Math.random() > 0.1 ? 2 : 4;
+    // board[getRowIdx()][getColIdx()] = Math.random() > 0.1 ? 2 : 4;
+    tilesArray = [];
+    // hard code tiles in specific places an push them to tilesArray
+    // let tile_1 = new Tile(1, 1, 2);
+    // tile_1.moveX();
+    // tile_1.moveY();
+    // tilesArray.push(tile_1)
+    // let tile_2 = new Tile(1, 3, 2);
+    // tilesArray.push(tile_2);
+    // tile_2.moveX();
+    // tile_2.moveY();
+
+    // // little loop test
+    // for (let i = 0; i < tilesArray.length; i++){
+    //     for (let j = 0; j < 1; j++){
+    //         tilesArray[i].x++;
+    //         setInterval(() => tilesArray[i].moveX(), 10);
+    //         console.log(tilesArray[i]);
+    //     }
+    // }
+    
+    // setInterval(moveX, 10);
+
+
+
+    //for each cell on the board array, create a tile, but maybe it can be done on the addtile func
+    // addTile funct
     winner = 0;
 
     render();
 }
 
+init();
 
-function keyPressed(){
-    // function that listens for a key and executes the corresponding function
-}
+
+// generateRandPosition() {
+
+//     let tilePosition = "0-0"
+//     while ()
+//     let x = Math.floor(Math.random() * 4 + 1);
+//     let y = Math.floor(Math.random() * 4 + 1);
+    
+//     if (tilesArray.includes(tilePosition))
+// }
+
 
 function moveLeft(arr){ // this function is functional (only on the console for now)
     let zeros = arr.filter((num) => num === 0);
@@ -120,14 +168,20 @@ function populateAvailableIdx(board){
             } 
         }
     }
-    return;
 }
 
-function addNum(){ // addNum will be added on all the keys functions
-    let rowIdx = availableRowIdx[Math.floor(Math.random() * availableColIdx.length + 1)];
-    let colIdx = availableColIdx[Math.floor(Math.random() * availableColIdx.length + 1)];
-    board[rowIdx][colIdx] = Math.random() > 0.5 ? 2 : 4;
-    // add animation
+// function addNewNum(){ 
+//     let rowIdx = availableRowIdx[Math.floor(Math.random() * availableColIdx.length + 1)];
+//     let colIdx = availableColIdx[Math.floor(Math.random() * availableColIdx.length + 1)];
+//     board[rowIdx][colIdx] = Math.random() > 0.1 ? 2 : 4;
+// }
+
+function getRowIdx(){
+    return rowIdx = availableRowIdx[Math.floor(Math.random() * availableColIdx.length + 1)];
+}
+
+function getColIdx(){
+    return colIdx = availableColIdx[Math.floor(Math.random() * availableColIdx.length + 1)];
 }
 
 function checkForWinner(){
@@ -136,6 +190,7 @@ function checkForWinner(){
 
 function gameOver(){
     // if the board is full and there are no adjecent equal numbers
+    // remove key listeners
 
 }
 

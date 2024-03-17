@@ -4,35 +4,49 @@
     grid-template-columns: repeat(4, 20vmin); 
     grid-template-rows: repeat(4, 20vmin);
     gap: 2vmin; 
-    /* width: 400px; 
-    /* height: 400px;  */
-    /* margin: 0 auto;  */
+    width: fit-content;
+    height: fit-content;
+    margin: auto;  
     position: relative;
     padding: 3vmin;
 }
 
 .cell {
-    background-color: #f0f0f0; 
+    background-color: papayawhip; 
+    border-radius: 1.2vmin;
     display: flex;
     justify-content: center; 
     align-items: center; 
     font-size: 20px; 
     color: #333; 
-    /* border: 2px solid pink; */
-    /* transition: all 200ms ease-out; */
+    transition: all 200ms ease-out; 
 }
 
-.tile{
-    --x: 3;
-    --y: 3;
+.tile {
+    --x: 0;
+    --y: 0;
+    border-radius: 1.2vmin;
+    font-size: 50px;
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 20vmin;
     height: 20vmin;
-    background-color: blue;
+    background-color: blue; 
     top: calc(var(--y) * (20vmin + 2vmin) + 3vmin);
     left: calc(var(--x) * (20vmin + 2vmin) + 3vmin);
+    font-family: "Roboto", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    color: aliceblue;
+    /* animation: new 200ms ease-in-out; */
+    transition: 800ms ease-in-out;
 }
 
+/* @keyframes new {
+    0% {
+      opacity: .3;
+      transform: scale(0);
+    }
+  } */
