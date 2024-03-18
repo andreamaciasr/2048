@@ -32,6 +32,10 @@
 
         }
 
+        updateInnerText() {
+            this.tileElem.innerText = this.num;
+        }
+
         // getId(){ 
         //     this.id = this.x.toString() + this.y.toString();
         // } 
@@ -44,6 +48,16 @@
         moveY() {
             this.tileElem.style.setProperty("--y", this.y);
         }
+
+        show() {
+            this.tileElem.style.opacity = "1"; 
+        }
+    
+
+        hide() {
+            this.tileElem.style.opacity = "0"; 
+        }
+        
 
         
     }
@@ -72,7 +86,10 @@
 	/*----- event listeners -----*/
     document.addEventListener('keydown', function(event){
         if (event.key == 'ArrowRight') {
-            // moveTilesLeft();
+            checkAdjecentRight(tilesArray[3]);
+            checkAdjecentRight(tilesArray[2]);
+            moveRowsRight(tilesArray[2]);
+            moveRowsRight(tilesArray[3]);
         }
     })
 
@@ -98,38 +115,35 @@ function init(){
     [null, null, null, null]]
 
     // hard code tiles in specific places an push them to tilesArray
-    let tile_1 = new Tile(2, 2, 8);
+    let tile_1 = new Tile(1, 2, 4);
     tile_1.moveX();
     tile_1.moveY();
     tilesArray[tile_1.y][tile_1.x] = tile_1;
-    console.log(tilesArray);
-    let tile_2 = new Tile(1, 3, 4);
+    let tile_2 = new Tile(2, 2, 4);
     tile_2.moveX();
     tile_2.moveY();
     tilesArray[tile_2.y][tile_2.x] = tile_2;
-    console.log(tilesArray);
-    let tile_3 = new Tile(0, 2, 2);
+    let tile_3 = new Tile(0, 2, 4);
     tile_3.moveX();
     tile_3.moveY();
     tilesArray[tile_3.y][tile_3.x] = tile_3;
-    console.log(tilesArray);
 
-    let tile_4 = new Tile(1, 1, 3);
+    let tile_4 = new Tile(3, 2, 4);
     tile_4.moveX();
     tile_4.moveY();
     tilesArray[tile_4.y][tile_4.x] = tile_4;
     
-    let tile_5 = new Tile(3, 2, 5);
+    let tile_5 = new Tile(1, 3, 2);
     tile_5.moveX();
     tile_5.moveY();
     tilesArray[tile_5.y][tile_5.x] = tile_5;
     
-    let tile_6 = new Tile(0, 3, 6);
+    let tile_6 = new Tile(0, 3, 2);
     tile_6.moveX();
     tile_6.moveY();
     tilesArray[tile_6.y][tile_6.x] = tile_6;
     
-    let tile_7 = new Tile(3, 0, 7);
+    let tile_7 = new Tile(3, 0, 2);
     tile_7.moveX();
     tile_7.moveY();
     tilesArray[tile_7.y][tile_7.x] = tile_7;
@@ -163,38 +177,98 @@ function init(){
 }
 
 init();
-console.log(tilesArray);
-slideRight(tilesArray);
+// slideRight(tilesArray);
+// checkAdjecentRight(tilesArray[3]);
+// checkAdjecentRight(tilesArray[2]);
+// moveRowsRight(tilesArray[2]);
+// moveRowsRight(tilesArray[3]);
+// console.log(tilesArray);
 
 
-function animationRight(moves, tile) {
+
+function animationRight(moves, tile, tilesArray){
+    // let before = tilesArray[tile.y][tile.x];
+    // let xBefore = tile.x;
     for (let i = 0; i < moves; i++){
         tile.x++
         setInterval(() => tile.moveX(), 10);
     }
+    // tilesArray[before.y][before.x] = null;
+    // tilesArray[tile.y][tile.x] = tile;
+    // console.log(tilesArray);
+    
 }
 
-function moveRowsRight(tilesRow) {
+
+
+function moveRowsRight(tilesRow){
     let max = 3;
     for (let i = tilesRow.length - 1; i >= 0; i--){
         if (tilesRow[i] != null){
+            // checkAdjecentRight(tilesRow[i]);
             let moves = max - tilesRow[i].x 
             animationRight(moves, tilesRow[i]);
-            console.log("max: ", max);
             max--;
         }
     }
 }
 
-console.log(tilesArray[1]);
-// moveRowsRight(tilesArray[3]);
-console.log(tilesArray[1]);
 
 function slideRight(tilesArray){
     for (let i = 0; i < tilesArray.length; i++){
         moveRowsRight(tilesArray[i]);
     }
 }
+
+function checkAdjecentRight(tilesRow){
+    for (let i = 0; i < tilesRow.length - 1; i++){
+        if(tilesRow[i] !== null && tilesRow[i + 1] !== null){
+            if (tilesRow[i].num === tilesRow[i + 1].num){
+                mergeTilesRight(tilesRow[i], tilesRow[i + 1], tilesArray);
+            }
+        }
+    }
+}
+
+// function mergeTilesRight(tile1, tile2, tilesArray){
+//     let before = tilesArray[tile1.y][tile1.x];
+//     tilesArray[before.y][before.x] = null;
+//     tile1.x++;
+//     setInterval(() => tile1.moveX(), 10);
+//     tile1.num *= 2;
+//     // tile1.updateInnerText();
+//     // setInterval(() => tile1.updateInnerText(), 60);
+//     // tile1.updateInnerText()
+   
+//     tilesArray[tile2.y][tile2.x] = null; 
+//     tilesArray[tile1.y][tile1.x] = tile1;
+//     console.log("tilesArray: ", tilesArray);
+//     tile2.hide();
+//     tile2 = null;
+// }
+
+function mergeTilesRight(tile1, tile2, tilesArray) {
+    let before = tilesArray[tile1.y][tile1.x];
+    tilesArray[before.y][before.x] = null;
+    tile1.x++;
+    
+    tile1.num *= 2;
+
+    tilesArray[tile2.y][tile2.x] = null; 
+    tilesArray[tile1.y][tile1.x] = tile1;
+    tile2.hide();
+    tile2 = null;
+    // Delay the hiding of tile2 until after the animation is complete
+    setTimeout(() => {
+        tile1.moveX()
+        tile1.updateInnerText();
+    }, 0); // Adjust the delay time as needed based on your animation duration
+    
+}
+
+
+
+// function updateInnerText
 
 // function slideRight(tilesArray){
 //     let moves = 0;
@@ -218,12 +292,6 @@ function moveRight(moves, tile){
     }
 }
 
-
-// generateRandPosition(){
-// /*
-//  generate rand x and y positions and check for the ids in tilesid sarray
-// */
-// }
 
 
 function moveLeft(arr){ // this function is functional (only on the console for now)
