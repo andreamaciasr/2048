@@ -79,7 +79,10 @@ const log = (...args) => console.log(...args)
     document.addEventListener('keydown', function(event){
         if (event.key == 'ArrowRight') {
             console.log(tilesArray);
-            handleRight(tilesArray);      
+            handleRight(tilesArray); 
+            getAvailableSpots(tilesArray);
+            console.log(availableSpots)
+            addTile();     
         }
     })
     document.addEventListener('keydown', function(event){
@@ -116,25 +119,15 @@ init();
 
 function getAvailableSpots(tilesArray) {
     availableSpots = []; 
-    for (let i = 0; i < tilesArray.length; i++) {
-        for (let j = 0; j < tilesArray[i].length; j++) {
-            if (tilesArray[i][j] === null) {
-                availableSpots.push({ x: i, y: j });
+    for (let y = 0; y < tilesArray.length; y++) {
+        for (let x = 0; x < tilesArray[y].length; x++) {
+            if (tilesArray[y][x] === null) {
+                availableSpots.push({ x: x, y: y });
             }
         }
     }
 }
 
-function addTile() {
-    let x = availableSpots[Math.floor(Math.random() * availableSpots.length)].x;
-    let y = availableSpots[Math.floor(Math.random() * availableSpots.length)].y;
-    let num = Math.random() > 0.5 ? 2 : 4;
-
-    log(x,y);
-    let tile = new Tile(x, y, num);
-    tile.initTile();
-    tilesArray[y][x] = tile;
-}
 
 function handleRight(tilesArray){
     tilesArray.forEach(function(row){
@@ -170,6 +163,7 @@ function checkAdjecentRight(tilesRow){
         if(tilesRow[i] !== null && tilesRow[i + 1] !== null){
             if (tilesRow[i].num === tilesRow[i + 1].num){
                 mergeTilesRight(tilesRow[i], tilesRow[i + 1], tilesArray);
+                i++;
             }
         }
     }
@@ -186,12 +180,50 @@ function mergeTilesRight(tile1, tile2, tilesArray) {
     tile2.hide();
     tile2 = null;
    
-    setTimeout(() => {
+    setInterval(() => {
         tile1.moveX()
         tile1.updateInnerText();
         tile1.updateBackgroundColor();
     }, 0); 
 }
+
+
+
+function addTile() {
+    setTimeout(() => {
+        getAvailableSpots(tilesArray);
+        let place = Math.floor(Math.random() * availableSpots.length);
+        let x = availableSpots[place].x;
+        let y = availableSpots[place].y;
+        let num = Math.random() > 0.9 ? 4 : 2;
+        let tile = new Tile(x, y, num);
+        tile.initTile();
+        tilesArray[y][x] = tile;
+    }, 10); 
+    
+}
+
+// function addTileTest() {
+//     let x = 0
+//     let y = Math.floor(Math.random() * 4);
+//     log(x,y);
+//     let num = Math.random() > 0.9 ? 4 : 2;
+//     let tile = new Tile(x, y, num);
+//     tile.initTile();
+//     tilesArray[y][x] = tile;
+// }
+
+// function addTile() {
+//     getAvailableSpots(tilesArray);
+//     log(availableSpots);
+//     let x = availableSpots[Math.floor(Math.random() * availableSpots.length)].x;
+//     let y = availableSpots[Math.floor(Math.random() * availableSpots.length)].y;
+//     let num = Math.random() > 0.5 ? 2 : 4;
+//     log(x,y);
+//     let tile = new Tile(x, y, num);
+//     tile.initTile();
+//     tilesArray[y][x] = tile;
+// }
 
 
 
