@@ -78,17 +78,16 @@ const log = (...args) => console.log(...args)
 	/*----- event listeners -----*/
     document.addEventListener('keydown', function(event){
         if (event.key == 'ArrowRight') {
-            console.log(tilesArray);
             handleRight(tilesArray); 
             getAvailableSpots(tilesArray);
-            console.log(availableSpots)
             addTile();     
         }
     })
     document.addEventListener('keydown', function(event){
         if (event.key == 'ArrowLeft') {
-            console.log(tilesArray);
-
+            handleLeft(tilesArray);
+            getAvailableSpots(tilesArray);
+            addTile();
         }
     })
 
@@ -141,7 +140,7 @@ function animationRight(moves, tile, tilesArray){
     for (let i = 0; i < moves; i++){
         tile.x++;
         tilesArray[tile.y][tile.x] = tile;
-        tilesArray[tile.y][tile.x-1] = null;
+        tilesArray[tile.y][tile.x - 1] = null;
         setInterval(() => tile.moveX(), 10);      
     }
 }
@@ -174,7 +173,7 @@ function mergeTilesRight(tile1, tile2, tilesArray) {
     tilesArray[before.y][before.x] = null;
     tile1.x++;
     tile1.num *= 2;
-
+    // desparece la segunda
     tilesArray[tile2.y][tile2.x] = null; 
     tilesArray[tile1.y][tile1.x] = tile1;
     tile2.hide();
@@ -203,29 +202,61 @@ function addTile() {
     
 }
 
-// function addTileTest() {
-//     let x = 0
-//     let y = Math.floor(Math.random() * 4);
-//     log(x,y);
-//     let num = Math.random() > 0.9 ? 4 : 2;
-//     let tile = new Tile(x, y, num);
-//     tile.initTile();
-//     tilesArray[y][x] = tile;
-// }
+function handleLeft(tilesArray) {
+    tilesArray.forEach(function(row){
+        checkAdjecentLeft(row);
+        moveRowsLeft(row);
+    })
+}
 
-// function addTile() {
-//     getAvailableSpots(tilesArray);
-//     log(availableSpots);
-//     let x = availableSpots[Math.floor(Math.random() * availableSpots.length)].x;
-//     let y = availableSpots[Math.floor(Math.random() * availableSpots.length)].y;
-//     let num = Math.random() > 0.5 ? 2 : 4;
-//     log(x,y);
-//     let tile = new Tile(x, y, num);
-//     tile.initTile();
-//     tilesArray[y][x] = tile;
-// }
+function animationLeft(moves, tile, tilesArray) {
+    for (let i = 0; i < moves; i++){
+        tile.x--;
+        tilesArray[tile.y][tile.x] = tile;
+        tilesArray[tile.y][tile.x + 1] = null;
+        setInterval(() => tile.moveX(), 10);      
+    }
+}
 
+function moveRowsLeft(tilesRow){
+    let min = 0;
+    for (let i = 0; i < tilesRow.length; i++){
+        if (tilesRow[i] != null){
+            let moves = tilesRow[i].x - min;
+            animationLeft(moves, tilesRow[i], tilesArray);
+            min++;
+        }
+    }
+}
 
+function checkAdjecentLeft(tilesRow){
+    for (let i = tilesRow.length - 1; i >= 1; i--){
+        if(tilesRow[i] !== null && tilesRow[i - 1] !== null){
+            if (tilesRow[i].num === tilesRow[i - 1].num){
+                mergeTilesLeft(tilesRow[i], tilesRow[i - 1], tilesArray);
+                i--;
+            }
+        }
+    }
+}
+
+function mergeTilesLeft(tile1, tile2, tilesArray) {
+    let before = tilesArray[tile1.y][tile1.x];
+    tilesArray[before.y][before.x] = null;
+    tile1.x--;
+    tile1.num *= 2;
+
+    tilesArray[tile2.y][tile2.x] = null; 
+    tilesArray[tile1.y][tile1.x] = tile1;
+    tile2.hide();
+    tile2 = null;
+   
+    setInterval(() => {
+        tile1.moveX()
+        tile1.updateInnerText();
+        tile1.updateBackgroundColor();
+    }, 0); 
+}
 
 
 /*--- if time permits, creat a Score Board---*/
