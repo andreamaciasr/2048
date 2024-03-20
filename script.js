@@ -68,6 +68,7 @@ const log = (...args) => console.log(...args)
     let availableSpots;
     let winner;
     let score;
+    let flippedArray;
 
 	/*----- cached elements  -----*/
     // grid = Array.from(document.querySelector("#grid > div"));
@@ -88,6 +89,12 @@ const log = (...args) => console.log(...args)
             handleLeft(tilesArray);
             getAvailableSpots(tilesArray);
             addTile();
+        }
+    })
+    document.addEventListener('keydown', function(event){
+        if (event.key == 'ArrowDown') {
+           flipTilesArray(tilesArray);
+            console.log(flippedArray);
         }
     })
 
@@ -111,8 +118,9 @@ function init(){
 
     winner = 0;
     score = 0;
-
+    flippedArray = Array.from({ length: 4}, () => Array(4).fill(null));
 }
+
 
 init();
 
@@ -120,7 +128,7 @@ function getAvailableSpots(tilesArray) {
     availableSpots = []; 
     for (let y = 0; y < tilesArray.length; y++) {
         for (let x = 0; x < tilesArray[y].length; x++) {
-            if (tilesArray[y][x] === null) {
+            if (tilesArray[y][x] === null){
                 availableSpots.push({ x: x, y: y });
             }
         }
@@ -173,7 +181,7 @@ function mergeTilesRight(tile1, tile2, tilesArray) {
     tilesArray[before.y][before.x] = null;
     tile1.x++;
     tile1.num *= 2;
-    // desparece la segunda
+
     tilesArray[tile2.y][tile2.x] = null; 
     tilesArray[tile1.y][tile1.x] = tile1;
     tile2.hide();
@@ -258,5 +266,13 @@ function mergeTilesLeft(tile1, tile2, tilesArray) {
     }, 0); 
 }
 
+function flipTilesArray(tilesArray) {
+    flippedArray = Array.from({ length: 4}, () => Array(4).fill(null));;
+    for (let i = 0; i < tilesArray.length; i++) {
+        for (let j = 0; j < tilesArray[i].length; j++) {
+            flippedArray[j][i] = tilesArray[i][j];
+        }
+    }
+}
 
-/*--- if time permits, creat a Score Board---*/
+
