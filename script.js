@@ -71,10 +71,8 @@ const log = (...args) => console.log(...args)
     let flippedArray;
 
 	/*----- cached elements  -----*/
-    // grid = Array.from(document.querySelector("#grid > div"));
-    // grid = document.getElementById("grid");
-    let message;
-
+    let gameOver = document.getElementById("game-over-message");
+    let gameOverBackground = document.getElementById("game-over-background");
 
 	/*----- event listeners -----*/
     document.addEventListener('keydown', function(event){
@@ -126,7 +124,9 @@ function init(){
 
     winner = 0;
     score = 0;
-    flippedArray = Array.from({ length: 4}, () => Array(4).fill(null));
+    
+    gameOver.style.display = "none";
+    gameOverBackground.style.display = "none";
 }
 
 
@@ -140,6 +140,10 @@ function getAvailableSpots(tilesArray) {
                 availableSpots.push({ x: x, y: y });
             }
         }
+    }
+    if (availableSpots.length === 0){
+        gameOver.style.display = "block";
+        gameOverBackground.style.display = "block";
     }
 }
 
