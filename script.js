@@ -93,10 +93,14 @@ const log = (...args) => console.log(...args)
     })
     document.addEventListener('keydown', function(event){
         if (event.key == 'ArrowDown') {
-            // checkAdjecentDown(tilesArray);
-            // moveRowsDown(tilesArray);
             handleDown(tilesArray)
-            // log(tilesArray);
+            getAvailableSpots(tilesArray);
+            addTile();
+        }
+    })
+    document.addEventListener('keydown', function(event){
+        if (event.key == 'ArrowUp') {
+            handleUp(tilesArray)
             getAvailableSpots(tilesArray);
             addTile();
         }
@@ -147,6 +151,22 @@ function handleRight(tilesArray){
     })
 }
 
+function handleLeft(tilesArray) {
+    tilesArray.forEach(function(row){
+        checkAdjecentLeft(row);
+        moveRowsLeft(row);
+    })
+}
+
+function handleDown(tilesArray) {
+    checkAdjecentDown(tilesArray);
+    moveRowsDown(tilesArray);
+}
+
+function handleUp(tilesArray) {
+    checkAdjecentUp(tilesArray);
+    moveRowsUp(tilesArray);
+}
 
 function animationRight(moves, tile, tilesArray){
     for (let i = 0; i < moves; i++){
@@ -214,13 +234,6 @@ function addTile() {
     
 }
 
-function handleLeft(tilesArray) {
-    tilesArray.forEach(function(row){
-        checkAdjecentLeft(row);
-        moveRowsLeft(row);
-    })
-}
-
 function animationLeft(moves, tile, tilesArray) {
     for (let i = 0; i < moves; i++){
         tile.x--;
@@ -270,16 +283,6 @@ function mergeTilesLeft(tile1, tile2, tilesArray) {
     }, 0); 
 }
 
-// function flipTilesArray(tilesArray) {
-//     flippedArray = Array.from({ length: 4}, () => Array(4).fill(null));;
-//     for (let i = 0; i < tilesArray.length; i++) {
-//         for (let j = 0; j < tilesArray[i].length; j++) {
-//             flippedArray[j][i] = tilesArray[i][j];
-//         }
-//     }
-// }
-
-// i es la columna, o y
 function checkAdjecentDown(tilesArray) {
     for (let j = 0; j < tilesArray[0].length; j++){ // x
         for (let i = 0; i < tilesArray.length - 1; i++){ // y
@@ -312,30 +315,13 @@ function mergeTilesDown(tile1, tile2, tilesArray) {
     }, 0); 
 }
 
-function handleDown(tilesArray) {
-    checkAdjecentDown(tilesArray);
-    moveRowsDown(tilesArray);
-}
-
-// function moveRowsDown(tilesArray) {
-//     let max = 3;
-//     for (let j = 0; j < tilesArray[0].length; j++){
-//         for (let i = 0; i < tilesArray.length - 1; i++){
-//             let moves = max - tilesArray[i][j].x;
-//             animationDown(moves, tilesArray[i][j]);
-//             max--;
-//         }
-//     }
-// }
 
 function moveRowsDown(tilesArray) {
     let max = 3;
     for (let j = 0; j < tilesArray[0].length; j++){
         for (let i = tilesArray.length - 1; i >= 0; i--){
             if (tilesArray[i][j] !== null){ 
-                log("y value: ",tilesArray[i][j].y);
                 let moves = max - tilesArray[i][j].y;
-                log("moves: ",moves);
                 animationDown(moves, tilesArray[i][j]);
                 max--;
             }
@@ -343,23 +329,6 @@ function moveRowsDown(tilesArray) {
         max = 3;
     }
 }
-
-
-
-
-// function moveRowsDown(tilesArray) {
-//     let gridHeight = tilesArray.length;
-//     let gridWidth = tilesArray[0].length;
-
-//     for (let j = 0; j < gridWidth; j++) { // Loop over columns from left to right
-//         for (let i = 0; i < gridHeight; i++) { // Loop over rows from top to bottom
-//             if (tilesArray[i][j] !== null) {
-//                 let moves = gridHeight - 1 - tilesArray[i][j].y;
-//                 animationDown(moves, tilesArray[i][j]);
-//             }
-//         }
-//     }
-// }
 
 
 function animationDown(moves, tile){
@@ -371,80 +340,56 @@ function animationDown(moves, tile){
     }
 }
 
+function checkAdjecentUp(tilesArray) {
+    for (let j = 0; j < tilesArray[0].length; j++){
+        for (let i = tilesArray.length - 1; i >= 1; i--){
+            if (tilesArray[i][j] !== null && tilesArray[i - 1][j] !== null){ 
+                if (tilesArray[i][j].num === tilesArray[i - 1][j].num) {
+                    mergeTilesUp(tilesArray[i][j], tilesArray[i - 1][j], tilesArray)
+                    i--;    
+                } 
+            }
+        }
+    }
+}
 
+function mergeTilesUp(tile1, tile2, tilesArray) {
+    let before = tilesArray[tile1.y][tile1.x];
+    tilesArray[before.y][before.x] = null;
+    tile1.y--;
+    tile1.num *= 2;
 
-// /*
-// if arrowDown:
-// flippedArray(tilesArray);
-// loop through flippedArray;
-// check adjecent right, pero con valores y--;
-// */
-
-// function handleDown(flippedArray, tilesArray){
-//     flippedArray.forEach(function(row){
-//         checkAdjecentDown(row, tilesArray);
-//         moveRowsDown(row, tilesArray);
-//     })
-// }
-// // make sure we are passing the right tile
-
-// function animationDown(moves, tile, tilesArray, flippedArray){
-//     let flipped = {...tile};
-//     // cambiar las coordenadas de x y y para que funcione animationRight
-//     flipped.x = tile.y
-//     flipped.y = tile.x
-
-//     for (let i = 0; i < moves; i++){
-//         tile.y++;
-//         tilesArray[tile.y][tile.x] = tile;
-//         tilesArray[tile.y - 1][tile.x] = null;
-//         setInterval(() => tile.moveY(), 10);      
-//     }
-//     animationRight(moves, flippedtile, flippedArray);
-// }
-
-
-// function moveRowsDown(flippedRow, tilesArray){
-//     let max = 3;
-//     for (let i = flippedRow.length - 1; i >= 0; i--){
-//         if (flippedRow[i] != null){
-//             let moves = max - i; 
-//             animationDown(moves, flippedRow[i], tilesArray, flippedArray);
-//             // aqui tengo que pasar la actual tile, que tiene los valores reales, si esta en flippedRow
-//             // let actualTile = flippedRow[i];
-//             max--;
-//         }
-//     }
-// }
-
-// function checkAdjecentDown(flippedRow, tilesArray){
-//     for (let i = 0; i < flippedRow.length - 1; i++){
-//         if(flippedRow[i] !== null && flippedRow[i + 1] !== null){
-//             // aqui hay que comparar los valores de la actual tile, which is right
-//             if (flippedRow[i].num === flippedRow[i + 1].num){
-//                 mergeTilesDown(flippedArray[i], flippedArray[i + 1], tilesArray, flippedArray);
-//                 i++;
-//             }
-//         }
-//     }
-// }
-
-// function mergeTilesDown(tile1, tile2, tilesArray, flippedArray) {
-//     let before = tilesArray[tile1.y][tile1.x];
-//     tilesArray[before.y][before.x] = null;
-//     tile1.y++;
-//     tile1.num *= 2;
-
-//     tilesArray[tile2.y][tile2.x] = null; 
-//     tilesArray[tile1.y][tile1.x] = tile1;
-//     tile2.hide();
-//     tile2 = null;
+    tilesArray[tile2.y][tile2.x] = null; 
+    tilesArray[tile1.y][tile1.x] = tile1;
+    tile2.hide();
+    tile2 = null;
    
-//     setInterval(() => {
-//         tile1.moveX()
-//         tile1.updateInnerText();
-//         tile1.updateBackgroundColor();
-//     }, 0); 
-//     // hacer una copia y pasar esa copia como 
-//     mergeTilesRight(tile1, tile2, flippedArray)
-// }
+    setInterval(() => {
+        tile1.moveY()
+        tile1.updateInnerText();
+        tile1.updateBackgroundColor();
+    }, 0); 
+}
+
+function moveRowsUp(tilesArray) {
+    let min = 0;
+    for (let j = 0; j < tilesArray[0].length; j++){
+        for (let i = 0; i < tilesArray.length; i++){
+            if (tilesArray[i][j] !== null){ 
+                let moves = tilesArray[i][j].y - min;
+                animationUp(moves, tilesArray[i][j]);
+                min++;
+            }
+        }
+        min = 0;
+    }
+}
+
+function animationUp(moves, tile){
+    for (let i = 0; i < moves; i++){
+        tile.y--;
+        tilesArray[tile.y][tile.x] = tile;
+        tilesArray[tile.y + 1][tile.x] = null;
+        setInterval(() => tile.moveY(), 10);      
+    }
+}
