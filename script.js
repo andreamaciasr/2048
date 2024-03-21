@@ -2,7 +2,7 @@ const log = (...args) => console.log(...args)
     
     /*----- constants -----*/
     const COLORS = {
-        0: '#f9ebeb',     // pale pink
+        0: '#f9ebeb',     
         2: '#f9d3d3',
         4: '#f8bbbb',
         8: '#f79f9f',
@@ -13,7 +13,7 @@ const log = (...args) => console.log(...args)
         256: '#f10d0d',
         512: '#ec0000',
         1024: '#d90000',
-        2048: '#c40000'   // stronger pink
+        2048: '#c40000'   
     };
 
     class Tile {
@@ -230,7 +230,7 @@ function addTile() {
         let tile = new Tile(x, y, num);
         tile.initTile();
         tilesArray[y][x] = tile;
-    }, 10); 
+    }, 18); 
     
 }
 
