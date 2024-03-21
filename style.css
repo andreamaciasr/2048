@@ -97,6 +97,7 @@
     top: 10vmin;
     left: 7vmin;
     position: absolute;
+    display: flex;
 }
 
 #score {
@@ -104,14 +105,15 @@
     font-weight: 700;
     font-style: normal;
     font-size: 4vmin;
-    /* margin-top: 20px; */
     position: absolute;
     top: 11.6vmin;
     left: 9vmin;
-    color:#ffffff
+    color:#ffffff;
+    display: flex;
 }
 
 button {
+    /* display: flex; */
     background-color: rgba(228, 75, 85, 0.8); 
     margin-top: 10vmin; 
     position: absolute;
@@ -127,5 +129,6 @@ button {
     width: 20vmin; 
     height: 8vmin;
     cursor: pointer;
+   
 }
 

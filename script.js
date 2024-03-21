@@ -80,35 +80,42 @@ const log = (...args) => console.log(...args)
 	/*----- event listeners -----*/
     restart.addEventListener("click", init);
 
-    document.addEventListener('keydown', function(event){
-        if (event.key == 'ArrowRight') {
-            handleRight(tilesArray); 
-            getAvailableSpots(tilesArray);
-            addTile();    
-        }
-    })
-    document.addEventListener('keydown', function(event){
-        if (event.key == 'ArrowLeft') {
-            handleLeft(tilesArray);
-            getAvailableSpots(tilesArray);
-            addTile();
-        }
-    })
-    document.addEventListener('keydown', function(event){
-        if (event.key == 'ArrowDown') {
-            handleDown(tilesArray)
-            getAvailableSpots(tilesArray);
-            addTile();
-        }
-    })
-    document.addEventListener('keydown', function(event){
-        if (event.key == 'ArrowUp') {
-            handleUp(tilesArray)
-            getAvailableSpots(tilesArray);
-            addTile();
-        }
-    })
-
+    // document.addEventListener('keydown', function(event){
+    //     if (event.key == 'ArrowRight') {
+    //         handleRight(tilesArray); 
+    //         getAvailableSpots(tilesArray);
+    //         addTile();    
+    //     }
+    // })
+    // document.addEventListener('keydown', function(event){
+    //     if (event.key == 'ArrowLeft') {
+    //         handleLeft(tilesArray);
+    //         getAvailableSpots(tilesArray);
+    //         addTile();
+    //     }
+    // })
+    // document.addEventListener('keydown', function(event){
+    //     if (event.key == 'ArrowDown') {
+    //         handleDown(tilesArray)
+    //         getAvailableSpots(tilesArray);
+    //         addTile();
+    //         isWinner();
+    //     }
+    // })
+    // document.addEventListener('keydown', function(event){
+    //     if (event.key == 'ArrowUp') {
+    //         handleUp(tilesArray)
+    //         getAvailableSpots(tilesArray);
+    //         addTile();
+    //         // if (isWinner);
+    //     }
+    // })
+    
+    // Add event listeners using the named functions
+    document.addEventListener('keydown', handleArrowRight);
+    document.addEventListener('keydown', handleArrowLeft);
+    document.addEventListener('keydown', handleArrowDown);
+    document.addEventListener('keydown', handleArrowUp);
 
 	/*----- functions -----*/
         
@@ -128,7 +135,6 @@ function init(){
 
     log(tilesArray);
 
-    winner = 0;
     score = 0;
     scoreBoard.innerText = `Score: ${score}`;
 
@@ -138,6 +144,68 @@ function init(){
 }
 
 init();
+
+function handleArrowRight(event) {
+    if (event.key == 'ArrowRight') {
+        handleRight(tilesArray); 
+        getAvailableSpots(tilesArray);
+        if (isWinner()) {
+            removeAllEventListeners();
+        };  
+    }
+}
+
+function handleArrowLeft(event) {
+    if (event.key == 'ArrowLeft') {
+        handleLeft(tilesArray);
+        getAvailableSpots(tilesArray);
+        if (isWinner()) {
+            removeAllEventListeners();
+        };
+    }
+}
+
+function handleArrowDown(event) {
+    if (event.key == 'ArrowDown') {
+        handleDown(tilesArray)
+        getAvailableSpots(tilesArray);
+        addTile();
+        if (isWinner()) {
+            removeAllEventListeners();
+        };
+    }
+}
+
+function handleArrowUp(event) {
+    if (event.key == 'ArrowUp') {
+        handleUp(tilesArray)
+        getAvailableSpots(tilesArray);
+        addTile();
+        if (isWinner()) {
+            removeAllEventListeners();
+        };
+    }
+}
+
+function isWinner() {
+    for (let i = 0; i < tilesArray.length; i++) {
+        for (let j = 0; j < tilesArray[i].length; j++) {
+            const tile = tilesArray[i][j];
+            if (tile !== null && tile.num === 8) {
+                return true; 
+            }
+        }
+    }
+    return false; 
+}
+
+
+function removeAllEventListeners() {
+    document.removeEventListener('keydown', handleArrowRight);
+    document.removeEventListener('keydown', handleArrowLeft);
+    document.removeEventListener('keydown', handleArrowDown);
+    document.removeEventListener('keydown', handleArrowUp);
+}
 
 function removeTiles() {
     let tiles = document.querySelectorAll(".tile");
