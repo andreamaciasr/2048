@@ -26,7 +26,7 @@
     --x: 0;
     --y: 0;
     border-radius: 1.2vmin;
-    font-size: 50px;
+    font-size: 9vmin;
     position: absolute;
     display: flex;
     justify-content: center;
@@ -40,13 +40,13 @@
     font-weight: 800;
     font-style: normal;
     color: aliceblue;
-    /* animation: new 200ms ease-in-out; */
+    animation: new 200ms ease-in-out; 
     transition: 800ms ease-in-out;
 }
 
-/* @keyframes new {
+@keyframes new {
     0% {
       opacity: .3;
       transform: scale(0);
     }
-  } */
+  }
