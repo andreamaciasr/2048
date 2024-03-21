@@ -73,13 +73,17 @@ const log = (...args) => console.log(...args)
 	/*----- cached elements  -----*/
     let gameOver = document.getElementById("game-over-message");
     let gameOverBackground = document.getElementById("game-over-background");
+    let scoreBoard = document.getElementById("score");
+    let restart = document.querySelector("button");
 
 	/*----- event listeners -----*/
+    restart.addEventListener("click", init);
+
     document.addEventListener('keydown', function(event){
         if (event.key == 'ArrowRight') {
             handleRight(tilesArray); 
             getAvailableSpots(tilesArray);
-            addTile();     
+            addTile();    
         }
     })
     document.addEventListener('keydown', function(event){
@@ -106,7 +110,6 @@ const log = (...args) => console.log(...args)
 
 
 	/*----- functions -----*/
-
         
 function init(){
 
@@ -114,6 +117,8 @@ function init(){
     [null, null, null, null],
     [null, null, null, null],
     [null, null, null, null]]
+
+    removeTiles();
 
    
     getAvailableSpots(tilesArray);
@@ -124,13 +129,21 @@ function init(){
 
     winner = 0;
     score = 0;
-    
+    scoreBoard.innerText = `Score: ${score}`;
+
     gameOver.style.display = "none";
     gameOverBackground.style.display = "none";
+
 }
 
-
 init();
+
+function removeTiles() {
+    let tiles = document.querySelectorAll(".tile");
+    tiles.forEach(function(tile) {
+        tile.remove();
+    });
+}
 
 function getAvailableSpots(tilesArray) {
     availableSpots = []; 
@@ -208,6 +221,9 @@ function mergeTilesRight(tile1, tile2, tilesArray) {
     let before = tilesArray[tile1.y][tile1.x];
     tilesArray[before.y][before.x] = null;
     tile1.x++;
+
+    score += tile1.num + tile2.num;
+    scoreBoard.innerText = `Score: ${score}`;
     tile1.num *= 2;
 
     tilesArray[tile2.y][tile2.x] = null; 
@@ -273,13 +289,16 @@ function mergeTilesLeft(tile1, tile2, tilesArray) {
     let before = tilesArray[tile1.y][tile1.x];
     tilesArray[before.y][before.x] = null;
     tile1.x--;
+
+    score += tile1.num + tile2.num;
+    scoreBoard.innerText = `Score: ${score}`;
     tile1.num *= 2;
 
     tilesArray[tile2.y][tile2.x] = null; 
     tilesArray[tile1.y][tile1.x] = tile1;
     tile2.hide();
     tile2 = null;
-   
+
     setInterval(() => {
         tile1.moveX()
         tile1.updateInnerText();
@@ -305,6 +324,9 @@ function mergeTilesDown(tile1, tile2, tilesArray) {
     let before = tilesArray[tile1.y][tile1.x];
     tilesArray[before.y][before.x] = null;
     tile1.y++;
+
+    score += tile1.num + tile2.num;
+    scoreBoard.innerText = `Score: ${score}`;
     tile1.num *= 2;
 
     tilesArray[tile2.y][tile2.x] = null; 
@@ -361,6 +383,9 @@ function mergeTilesUp(tile1, tile2, tilesArray) {
     let before = tilesArray[tile1.y][tile1.x];
     tilesArray[before.y][before.x] = null;
     tile1.y--;
+
+    score += tile1.num + tile2.num;
+    scoreBoard.innerText = `Score: ${score}`;
     tile1.num *= 2;
 
     tilesArray[tile2.y][tile2.x] = null; 
