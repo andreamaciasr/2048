@@ -1,6 +1,7 @@
 const log = (...args) => console.log(...args)
     
     /*----- constants -----*/
+    const scoreColor = "#FEF9D1"
     const COLORS = {
         0: '#f9ebeb',     
         2: '#f9d3d3',
@@ -223,7 +224,7 @@ function mergeTilesRight(tile1, tile2, tilesArray) {
     tile1.x++;
 
     score += tile1.num + tile2.num;
-    scoreBoard.innerText = `Score: ${score}`;
+    scoreBoard.innerHTML = `Score: <span style="color: ${scoreColor};">${score}</span>`;
     tile1.num *= 2;
 
     tilesArray[tile2.y][tile2.x] = null; 
@@ -291,7 +292,7 @@ function mergeTilesLeft(tile1, tile2, tilesArray) {
     tile1.x--;
 
     score += tile1.num + tile2.num;
-    scoreBoard.innerText = `Score: ${score}`;
+    scoreBoard.innerHTML = `Score: <span style="color: ${scoreColor};">${score}</span>`;
     tile1.num *= 2;
 
     tilesArray[tile2.y][tile2.x] = null; 
@@ -326,7 +327,7 @@ function mergeTilesDown(tile1, tile2, tilesArray) {
     tile1.y++;
 
     score += tile1.num + tile2.num;
-    scoreBoard.innerText = `Score: ${score}`;
+    scoreBoard.innerHTML = `Score: <span style="color: ${scoreColor};">${score}</span>`;
     tile1.num *= 2;
 
     tilesArray[tile2.y][tile2.x] = null; 
@@ -385,7 +386,7 @@ function mergeTilesUp(tile1, tile2, tilesArray) {
     tile1.y--;
 
     score += tile1.num + tile2.num;
-    scoreBoard.innerText = `Score: ${score}`;
+    scoreBoard.innerHTML = `Score: <span style="color: ${scoreColor};">${score}</span>`;
     tile1.num *= 2;
 
     tilesArray[tile2.y][tile2.x] = null; 
