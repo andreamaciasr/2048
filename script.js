@@ -160,7 +160,7 @@ function isWinner() {
     for (let i = 0; i < tilesArray.length; i++) {
         for (let j = 0; j < tilesArray[i].length; j++) {
             const tile = tilesArray[i][j];
-            if (tile !== null && tile.num === 32) {
+            if (tile !== null && tile.num === 2048) {
                 gameMessage.innerText = "You Won!";
                 background.style.display = "block"
                 return true; 
