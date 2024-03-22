@@ -27,7 +27,7 @@ const log = (...args) => console.log(...args)
             this.num = num;
             this.tileElem.innerText = this.num;
             this.tileElem.style.backgroundColor = COLORS[num];
-            this.tileElem.style.transition = "left 0.5s, top 0.5s";
+            this.tileElem.style.transition = "left 0.2s, top 0.2s";
 
             this.x = x;
             this.y = y;
@@ -38,7 +38,7 @@ const log = (...args) => console.log(...args)
             this.tileElem.innerText = this.num;
         }
 
-        updateBackgroundColor(){
+        updateBackgroundColor() {
             this.tileElem.style.backgroundColor = COLORS[this.num];
         }
 
@@ -80,46 +80,15 @@ const log = (...args) => console.log(...args)
 	/*----- event listeners -----*/
     restart.addEventListener("click", init);
 
-    // document.addEventListener('keydown', function(event){
-    //     if (event.key == 'ArrowRight') {
-    //         handleRight(tilesArray); 
-    //         getAvailableSpots(tilesArray);
-    //         addTile();    
-    //     }
-    // })
-    // document.addEventListener('keydown', function(event){
-    //     if (event.key == 'ArrowLeft') {
-    //         handleLeft(tilesArray);
-    //         getAvailableSpots(tilesArray);
-    //         addTile();
-    //     }
-    // })
-    // document.addEventListener('keydown', function(event){
-    //     if (event.key == 'ArrowDown') {
-    //         handleDown(tilesArray)
-    //         getAvailableSpots(tilesArray);
-    //         addTile();
-    //         isWinner();
-    //     }
-    // })
-    // document.addEventListener('keydown', function(event){
-    //     if (event.key == 'ArrowUp') {
-    //         handleUp(tilesArray)
-    //         getAvailableSpots(tilesArray);
-    //         addTile();
-    //         // if (isWinner);
-    //     }
-    // })
-    
-    // Add event listeners using the named functions
+
+	/*----- functions -----*/
+        
+function init() {
+
     document.addEventListener('keydown', handleArrowRight);
     document.addEventListener('keydown', handleArrowLeft);
     document.addEventListener('keydown', handleArrowDown);
     document.addEventListener('keydown', handleArrowUp);
-
-	/*----- functions -----*/
-        
-function init(){
 
     tilesArray = [[null, null, null, null],
     [null, null, null, null],
@@ -133,10 +102,9 @@ function init(){
     addTile();
     addTile();
 
-    log(tilesArray);
-
     score = 0;
     scoreBoard.innerText = `Score: ${score}`;
+    gameMessage.innerText = "";
 
     background.style.display = "none";
 
@@ -267,7 +235,7 @@ function animationRight(moves, tile, tilesArray){
 }
 
 
-function moveRowsRight(tilesRow){
+function moveRowsRight(tilesRow) {
     let max = 3;
     for (let i = tilesRow.length - 1; i >= 0; i--){
         if (tilesRow[i] != null){
@@ -278,7 +246,7 @@ function moveRowsRight(tilesRow){
     }
 }
 
-function checkAdjecentRight(tilesRow){
+function checkAdjecentRight(tilesRow) {
     for (let i = 0; i < tilesRow.length - 1; i++){
         if(tilesRow[i] !== null && tilesRow[i + 1] !== null){
             if (tilesRow[i].num === tilesRow[i + 1].num){
@@ -335,7 +303,7 @@ function animationLeft(moves, tile, tilesArray) {
     }
 }
 
-function moveRowsLeft(tilesRow){
+function moveRowsLeft(tilesRow) {
     let min = 0;
     for (let i = 0; i < tilesRow.length; i++){
         if (tilesRow[i] != null){
@@ -346,7 +314,7 @@ function moveRowsLeft(tilesRow){
     }
 }
 
-function checkAdjecentLeft(tilesRow){
+function checkAdjecentLeft(tilesRow) {
     for (let i = tilesRow.length - 1; i >= 1; i--){
         if(tilesRow[i] !== null && tilesRow[i - 1] !== null){
             if (tilesRow[i].num === tilesRow[i - 1].num){
@@ -429,7 +397,7 @@ function moveRowsDown(tilesArray) {
 }
 
 
-function animationDown(moves, tile){
+function animationDown(moves, tile) {
     for (let i = 0; i < moves; i++){
         tile.y++;
         tilesArray[tile.y][tile.x] = tile;
@@ -486,7 +454,7 @@ function moveRowsUp(tilesArray) {
     }
 }
 
-function animationUp(moves, tile){
+function animationUp(moves, tile) {
     for (let i = 0; i < moves; i++){
         tile.y--;
         tilesArray[tile.y][tile.x] = tile;
