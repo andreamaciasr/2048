@@ -59,7 +59,7 @@
       }
 }
 
-#game-over-background {
+#background {
     position: absolute;
     width: 100%; 
     height: 100%; 
@@ -71,7 +71,7 @@
     z-index: 999; 
 }
 
-#game-over-message {
+#game-message {
     font-family: "Roboto", sans-serif;
     font-weight: 800;
     font-style: normal;

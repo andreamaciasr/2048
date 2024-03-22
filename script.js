@@ -72,8 +72,8 @@ const log = (...args) => console.log(...args)
     let flippedArray;
 
 	/*----- cached elements  -----*/
-    let gameOver = document.getElementById("game-over-message");
-    let gameOverBackground = document.getElementById("game-over-background");
+    let gameMessage = document.getElementById("game-message");
+    let background = document.getElementById("background");
     let scoreBoard = document.getElementById("score");
     let restart = document.querySelector("button");
 
@@ -138,8 +138,7 @@ function init(){
     score = 0;
     scoreBoard.innerText = `Score: ${score}`;
 
-    gameOver.style.display = "none";
-    gameOverBackground.style.display = "none";
+    background.style.display = "none";
 
 }
 
@@ -149,6 +148,7 @@ function handleArrowRight(event) {
     if (event.key == 'ArrowRight') {
         handleRight(tilesArray); 
         getAvailableSpots(tilesArray);
+        addTile();
         if (isWinner()) {
             removeAllEventListeners();
         };  
@@ -159,6 +159,7 @@ function handleArrowLeft(event) {
     if (event.key == 'ArrowLeft') {
         handleLeft(tilesArray);
         getAvailableSpots(tilesArray);
+        addTile();
         if (isWinner()) {
             removeAllEventListeners();
         };
@@ -191,7 +192,9 @@ function isWinner() {
     for (let i = 0; i < tilesArray.length; i++) {
         for (let j = 0; j < tilesArray[i].length; j++) {
             const tile = tilesArray[i][j];
-            if (tile !== null && tile.num === 8) {
+            if (tile !== null && tile.num === 32) {
+                gameMessage.innerText = "You Won!";
+                background.style.display = "block"
                 return true; 
             }
         }
@@ -224,8 +227,8 @@ function getAvailableSpots(tilesArray) {
         }
     }
     if (availableSpots.length === 0){
-        gameOver.style.display = "block";
-        gameOverBackground.style.display = "block";
+        gameMessage.innerText = "Game Over!";
+        background.style.display = "block";
     }
 }
 
