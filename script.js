@@ -194,12 +194,33 @@ function getAvailableSpots(tilesArray) {
             }
         }
     }
-    if (availableSpots.length === 0){
+    if (availableSpots.length === 0 && !lastMove(tilesArray)){
         gameMessage.innerText = "Game Over!";
         background.style.display = "block";
     }
 }
 
+function lastMove(tilesArray) {
+    return possibleHorizontal(tilesArray) || possibleVertical(tilesArray);
+}
+
+function possibleHorizontal(tilesArray) {
+    for (let i = 0; i < tilesArray.length; i++) {    
+        if (tilesArray[i][1].num === tilesArray[i][0].num || tilesArray[i][1].num === tilesArray[i][2].num || tilesArray[i][2].num === tilesArray[i][3].num){
+            return true;
+        }
+    }
+    return false;
+}
+
+function possibleVertical(tilesArray) {
+    for (let j = 0; j < tilesArray[0].length; j++) {    
+        if (tilesArray[1][j].num === tilesArray[0][j].num || tilesArray[1][j].num === tilesArray[2][j].num || tilesArray[2][j].num === tilesArray[3][j].num){
+            return true;
+        }
+    }
+    return false;
+}
 
 function handleRight(tilesArray){
     tilesArray.forEach(function(row){
@@ -234,27 +255,6 @@ function animationRight(moves, tile, tilesArray){
     }
 }
 
-function lastMove(tilesArray) {
-    return possibleHorizontal(tilesArray) || possibleVertical(tilesArray);
-}
-
-function possibleHorizontal(tilesArray) {
-    for (let i = 0; i < tilesArray.length; i++) {    
-        if (tilesArray[i][1] === tilesArray[i][0] || tilesArray[i][1] === tilesArray[i][2] || tilesArray[i][2] === tilesArray[i][3]){
-            return true;
-        }
-    }
-    return false;
-}
-
-function possibleVertical(tilesArray) {
-    for (let j = 0; j < tilesArray[0].length; j++) {    
-        if (tilesArray[1][j] === tilesArray[j][0] || tilesArray[j][1] === tilesArray[j][2] || tilesArray[j][2] === tilesArray[j][3]){
-            return true;
-        }
-    }
-    return false;
-}
 
 function moveRowsRight(tilesRow) {
     let max = 3;
