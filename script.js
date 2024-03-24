@@ -234,6 +234,27 @@ function animationRight(moves, tile, tilesArray){
     }
 }
 
+function lastMove(tilesArray) {
+    return possibleHorizontal(tilesArray) || possibleVertical(tilesArray);
+}
+
+function possibleHorizontal(tilesArray) {
+    for (let i = 0; i < tilesArray.length; i++) {    
+        if (tilesArray[i][1] === tilesArray[i][0] || tilesArray[i][1] === tilesArray[i][2] || tilesArray[i][2] === tilesArray[i][3]){
+            return true;
+        }
+    }
+    return false;
+}
+
+function possibleVertical(tilesArray) {
+    for (let j = 0; j < tilesArray[0].length; j++) {    
+        if (tilesArray[1][j] === tilesArray[j][0] || tilesArray[j][1] === tilesArray[j][2] || tilesArray[j][2] === tilesArray[j][3]){
+            return true;
+        }
+    }
+    return false;
+}
 
 function moveRowsRight(tilesRow) {
     let max = 3;
