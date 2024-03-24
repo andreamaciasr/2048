@@ -268,11 +268,11 @@ function moveRowsRight(tilesRow) {
 }
 
 function checkAdjecentRight(tilesRow) {
-    for (let i = 0; i < tilesRow.length - 1; i++){
-        if(tilesRow[i] !== null && tilesRow[i + 1] !== null){
-            if (tilesRow[i].num === tilesRow[i + 1].num){
-                mergeTilesRight(tilesRow[i], tilesRow[i + 1], tilesArray);
-                i++;
+    for (let i = tilesRow.length - 1; i >= 1 ; i--){
+        if(tilesRow[i] !== null && tilesRow[i - 1] !== null){
+            if (tilesRow[i].num === tilesRow[i - 1].num){
+                mergeTilesRight(tilesRow[i - 1], tilesRow[i], tilesArray);
+                i--;
             }
         }
     }
@@ -369,11 +369,11 @@ function mergeTilesLeft(tile1, tile2, tilesArray) {
 
 function checkAdjecentDown(tilesArray) {
     for (let j = 0; j < tilesArray[0].length; j++){ // x
-        for (let i = 0; i < tilesArray.length - 1; i++){ // y
-            if (tilesArray[i][j] !== null && tilesArray[i + 1][j] !== null) {
-                if (tilesArray[i][j].num === tilesArray[i + 1][j].num) {
-                    mergeTilesDown(tilesArray[i][j], tilesArray[i + 1][j], tilesArray)
-                    i++;    
+        for (let i = tilesArray.length - 1; i >= 1; i--){ // y
+            if (tilesArray[i][j] !== null && tilesArray[i - 1][j] !== null) {
+                if (tilesArray[i][j].num === tilesArray[i - 1][j].num) {
+                    mergeTilesDown(tilesArray[i - 1][j], tilesArray[i][j], tilesArray)
+                    i--;    
                 } 
             }
         }
@@ -429,11 +429,11 @@ function animationDown(moves, tile) {
 
 function checkAdjecentUp(tilesArray) {
     for (let j = 0; j < tilesArray[0].length; j++){
-        for (let i = tilesArray.length - 1; i >= 1; i--){
-            if (tilesArray[i][j] !== null && tilesArray[i - 1][j] !== null){ 
-                if (tilesArray[i][j].num === tilesArray[i - 1][j].num) {
-                    mergeTilesUp(tilesArray[i][j], tilesArray[i - 1][j], tilesArray)
-                    i--;    
+        for (let i = 0; i < tilesArray.length - 1; i++){
+            if (tilesArray[i][j] !== null && tilesArray[i + 1][j] !== null){ 
+                if (tilesArray[i][j].num === tilesArray[i + 1][j].num) {
+                    mergeTilesUp(tilesArray[i + 1][j], tilesArray[i][j], tilesArray)
+                    i++;    
                 } 
             }
         }
