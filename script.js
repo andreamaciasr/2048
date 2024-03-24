@@ -336,11 +336,11 @@ function moveRowsLeft(tilesRow) {
 }
 
 function checkAdjecentLeft(tilesRow) {
-    for (let i = tilesRow.length - 1; i >= 1; i--){
-        if(tilesRow[i] !== null && tilesRow[i - 1] !== null){
-            if (tilesRow[i].num === tilesRow[i - 1].num){
-                mergeTilesLeft(tilesRow[i], tilesRow[i - 1], tilesArray);
-                i--;
+    for (let i = 0; i < tilesRow.length - 1; i++){
+        if(tilesRow[i] !== null && tilesRow[i + 1] !== null){
+            if (tilesRow[i].num === tilesRow[i + 1].num){
+                mergeTilesLeft(tilesRow[i + 1], tilesRow[i], tilesArray);
+                i++;
             }
         }
     }
