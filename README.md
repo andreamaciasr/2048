@@ -20,4 +20,5 @@ Use the arrow keys to merge tiles with the same number until you reach 2048, but
 # Next Steps
 
 - Refactor the code to make it more DRY.
+- Save user's highest score.
 - Add animation when a tile is merged.
